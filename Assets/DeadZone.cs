@@ -8,8 +8,8 @@ public class DeadZone : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        // 落下してきたオブジェクトがプレイヤー（TestScriptを持っている）かチェック
-        if (other.TryGetComponent<TestScript>(out _))
+        // 落下してきたオブジェクトがプレイヤー（PlayerControllerを持っている）かチェック
+        if (other.TryGetComponent<PlayerController>(out _))
         {
             Debug.Log("プレイヤーがステージから落下しました。初期位置に戻します。");
 

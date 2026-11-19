@@ -9,8 +9,8 @@ public class TrapObject : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        // 接触したオブジェクトがプレイヤー（TestScript）であるか判定
-        if (other.TryGetComponent<TestScript>(out _))
+        // 接触したオブジェクトがプレイヤー（PlayerController）であるか判定
+        if (other.TryGetComponent<PlayerController>(out _))
         {
             // 現在アクティブなシーンの名前を取得し、即座にロード（リペア/リトライ処理）
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
