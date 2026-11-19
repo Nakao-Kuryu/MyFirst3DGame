@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7f71f0e68f8aede4bac38f41bbb8281d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - gameManager: {instanceID: 0}
+  - audioSource: {instanceID: 0}
+  - coinSound: {fileID: 8300000, guid: de742a82d21b3d540927408454d79adc, type: 3}
+  - clearSound: {fileID: 8300000, guid: bf6b85e125e9c6547a5ac8c04f6e0c9d, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

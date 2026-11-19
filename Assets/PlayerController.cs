@@ -1,5 +1,4 @@
 using UnityEngine;
-using TMPro;
 
 /// <summary>
 /// プレイヤーの移動、ジャンプ、およびスコア管理を制御するコンポーネント。
@@ -11,13 +10,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 5.0f; // 移動の空気抵抗や力加減
     [SerializeField] private float jumpForce = 5.0f; // ジャンプ時の瞬間的な上方向への力
 
-    [Header("UIの参照")]
-    [SerializeField] private TextMeshProUGUI scoreText; // コイン枚数を表示するUIテキスト
-
     // 内部キャッシュ用の変数
     private Rigidbody rb;
-    private GameManager gameManager;
-    private int coinCount = 0;
     private bool isGrounded = true;
 
     // 入力値をUpdateとFixedUpdate間で共有するための変数
@@ -34,7 +28,6 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError($"{gameObject.name} に Rigidbody がついていません！追加してください。");
         }
-        gameManager = FindObjectOfType<GameManager>();
     }
 
     void Update()
@@ -73,19 +66,4 @@ public class PlayerController : MonoBehaviour
         // 地面に接触した際、ジャンプ可能状態にリセット
         isGrounded = true;
     }
-
-    /// <summary>
-    /// コイン獲得時に外部（CoinItem）から呼び出されるイベント関数。
-    /// スコアの更新とクリア条件のチェックを行う。
-    /// </summary>
-    public void AddCoin()
-    {
-        coinCount++;
-        scoreText.text = "COINS: " + coinCount.ToString();
-
-        if (gameManager != null)
-        {
-            gameManager.CheckClear(coinCount);
-        }
-    }   
 }

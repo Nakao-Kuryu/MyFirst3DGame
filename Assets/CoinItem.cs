@@ -6,14 +6,26 @@ using UnityEngine;
 /// </summary>
 public class CoinItem : MonoBehaviour
 {
+    // GameManager をキャッシュしておく変数
+    private GameManager gameManager;
+
+    void Start()
+    {
+        // シーン内から GameManager を1つ探す
+        // （FindObjectOfType は Unity 6 では非推奨なので、こちらを使う)
+        gameManager = FindAnyObjectByType<GameManager>();
+    }
+
     void OnTriggerEnter(Collider other)
     {
-        // 接触したオブジェクトがプレイヤー（PlayerController）を持っているかチェックし、
-        // 取得できた場合はそのまま変数 player にキャッシュ
-        if (other.TryGetComponent<PlayerController>(out var player))
+        // 触れたのがプレイヤーかどうかだけ判定する（中身は使わないので out _）
+        if (other.TryGetComponent<PlayerController>(out _))
         {
-            //プレイヤー側のスコア加算処理を呼び出す。
-            player.AddCoin();
+            // GameManager にコイン獲得を伝える（null なら呼ばない）
+            if (gameManager != null)
+            {
+                gameManager.AddCoin();
+            }
 
             // コイン自体をシーンから削除
             Destroy(gameObject);
