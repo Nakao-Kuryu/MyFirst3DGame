@@ -31,7 +31,7 @@ public class CrumblingPlatform : MonoBehaviour
     {
         Debug.Log($"床に何か（{collision.gameObject.name}）がぶつかりました！");
         // 接触したオブジェクトがプレイヤーかつ、まだギミックが発動していない場合
-        if (!isTriggered && collision.gameObject.TryGetComponent<TestScript>(out _))
+        if (!isTriggered && collision.gameObject.TryGetComponent<PlayerController>(out _))
         {
             isTriggered = true;
             StartCoroutine(CrumbleSequence());

@@ -5,7 +5,7 @@ using TMPro;
 /// プレイヤーの移動、ジャンプ、およびスコア管理を制御するコンポーネント。
 /// 入力検知はUpdate、物理演算はFixedUpdateに分離し、フレームレート非依存の挙動を保証。
 /// </summary>
-public class TestScript : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [Header("移動・ジャンプの設定")]
     [SerializeField] private float speed = 5.0f; // 移動の空気抵抗や力加減
