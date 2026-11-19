@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -7,6 +8,10 @@ public class GameManager : MonoBehaviour
 {
     [Header("ゲームクリアの設定")]
     [SerializeField] private int targetCoins = 3; // クリアに必要な総コイン枚数
+    private int coinCount = 0; // 現在のコイン枚数
+
+    private bool isCleared = false; // クリアを判定する変数
+
     [SerializeField] private GameObject clearTextUI; // クリア時に表示するUIオブジェクト
 
     [Header("オーディオの設定")]
@@ -15,6 +20,12 @@ public class GameManager : MonoBehaviour
 
     // 内部キャッシュ用のコンポーネント
     public AudioSource audioSource;
+
+    // コイン枚数が変わったときのイベント（新しい枚数を渡す）
+    public event Action<int> OnCoinCountChanged;
+
+    // クリアしたときのイベント（渡すものなし）
+    public event Action OnGameCleared;
 
     void Start()
     {
@@ -26,7 +37,22 @@ public class GameManager : MonoBehaviour
             Debug.LogError($"{gameObject.name} に AudioSource コンポーネントがついていません！追加してください。");
         }
     }
+    
 
+    public void AddCoin()
+    {
+        coinCount++;
+
+        // コイン枚数が変わったときのイベントを発行
+        OnCoinCountChanged?.Invoke(coinCount);
+
+        // コインが目標枚数に達していて、一度もクリアしていなかったら
+        if (coinCount >= targetCoins && !isCleared)
+        {
+            isCleared = true;
+            OnGameCleared?.Invoke();
+        }
+    }
     /// <summary>
     /// コインの獲得枚数を評価し、規定枚数に達していればクリア演出を実行する。
     /// </summary>
@@ -60,4 +86,6 @@ public class GameManager : MonoBehaviour
             audioSource.PlayOneShot(coinSound);
         }   
     }
+
+    
 }
