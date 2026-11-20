@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// ゲーム全体の進行、コイン枚数の管理、およびクリア判定を統括するマネージャーコンポーネント。
@@ -34,5 +35,14 @@ public class GameManager : MonoBehaviour
             isCleared = true;
             OnGameCleared?.Invoke();
         }
+    }
+
+    /// <summary>
+    /// DeadZone、TrapObjectから呼ばれ、シーンをリセットする。
+    /// </summary>
+    public void RestartStage()
+    {
+        // 今のシーンを読み直す
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
