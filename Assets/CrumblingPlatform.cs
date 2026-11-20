@@ -2,13 +2,16 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// プレイヤーが乗ると一定時間後に点滅して崩れ（消滅）、安全を確認してかた復活する床ギミック。
+/// プレイヤーが乗ると一定時間後に点滅して崩れ（消滅）、安全を確認してから復活する床ギミック。
 /// </summary>
 public class CrumblingPlatform : MonoBehaviour
 {
     [Header("崩れるまでの設定")]
     [SerializeField] private float delayBeforeCrumble = 1.5f; // 乗ってから崩れるまでの秒数
     [SerializeField] private float respawnTime = 3.0f; // 復活するまでの秒数
+
+    [Header("復活時の重なりチェック")]
+    [SerializeField] private LayerMask playerLayer; // 重なりを調べる対象のレイヤー（Player）
 
     // 内部キャッシュおよび状態管理用の変数
     private Collider platformCollider;
@@ -29,7 +32,6 @@ public class CrumblingPlatform : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log($"床に何か（{collision.gameObject.name}）がぶつかりました！");
         // 接触したオブジェクトがプレイヤーかつ、まだギミックが発動していない場合
         if (!isTriggered && collision.gameObject.TryGetComponent<PlayerController>(out _))
         {
@@ -59,9 +61,6 @@ public class CrumblingPlatform : MonoBehaviour
             timer += blinkInterval;
         }
 
-        // 消滅処理の直前に、見た目を一瞬だけ確実にONに戻す
-        if (meshRenderer != null) meshRenderer.enabled = true;
-
         // 床の当たり判定と見た目を完全に無効化する
         if (platformCollider != null) platformCollider.enabled = false;
         if (meshRenderer != null) meshRenderer.enabled = false;
@@ -70,7 +69,7 @@ public class CrumblingPlatform : MonoBehaviour
         yield return new WaitForSeconds(respawnTime);
 
         // 床のあった位置に、プレイヤーが重なっている間は復活を遅らせる
-        while (Physics.CheckBox(transform.position, transform.localScale / 2f, transform.rotation))
+        while (Physics.CheckBox(transform.position, transform.localScale / 2f, transform.rotation, playerLayer))
         {
             // 毎フレームごとにチェックを行う
             yield return null;

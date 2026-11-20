@@ -689,6 +689,7 @@ GameObject:
   - component: {fileID: 382246474}
   - component: {fileID: 382246473}
   - component: {fileID: 382246472}
+  - component: {fileID: 382246476}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -781,6 +782,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &382246476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382246471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc0b9aecfb8c7884e8670e2b10e03369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClearUI
+  gameManager: {fileID: 1125761076}
+  clearTextUI: {fileID: 810542193}
 --- !u!1 &487758725
 GameObject:
   m_ObjectHideFlags: 0
@@ -1908,6 +1923,7 @@ GameObject:
   - component: {fileID: 1125761077}
   - component: {fileID: 1125761076}
   - component: {fileID: 1125761078}
+  - component: {fileID: 1125761079}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1928,10 +1944,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   targetCoins: 3
-  clearTextUI: {fileID: 810542193}
-  clearSound: {fileID: 8300000, guid: bf6b85e125e9c6547a5ac8c04f6e0c9d, type: 3}
-  coinSound: {fileID: 8300000, guid: de742a82d21b3d540927408454d79adc, type: 3}
-  audioSource: {fileID: 0}
 --- !u!4 &1125761077
 Transform:
   m_ObjectHideFlags: 0
@@ -2044,6 +2056,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1125761079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125761075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f71f0e68f8aede4bac38f41bbb8281d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameAudio
+  gameManager: {fileID: 1125761076}
+  audioSource: {fileID: 1125761078}
+  coinSound: {fileID: 8300000, guid: de742a82d21b3d540927408454d79adc, type: 3}
+  clearSound: {fileID: 8300000, guid: bf6b85e125e9c6547a5ac8c04f6e0c9d, type: 3}
 --- !u!1 &1372528713
 GameObject:
   m_ObjectHideFlags: 0
@@ -2180,6 +2208,7 @@ GameObject:
   - component: {fileID: 1508118742}
   - component: {fileID: 1508118744}
   - component: {fileID: 1508118743}
+  - component: {fileID: 1508118745}
   m_Layer: 5
   m_Name: ScoreText
   m_TagString: Untagged
@@ -2306,6 +2335,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1508118741}
   m_CullTransparentMesh: 1
+--- !u!114 &1508118745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1508118741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c1898016604f054787504c988995ed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CoinCounterUI
+  gameManager: {fileID: 1125761076}
+  scoreText: {fileID: 1508118743}
 --- !u!1 &1545865629
 GameObject:
   m_ObjectHideFlags: 0
@@ -2634,7 +2677,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TestScript
   speed: 6
   jumpForce: 7
-  scoreText: {fileID: 1508118743}
+  groundNormalThreshold: 0.7
 --- !u!1 &2085494863
 GameObject:
   m_ObjectHideFlags: 0
