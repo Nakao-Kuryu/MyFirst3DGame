@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     [Header("ゲームクリアの設定")]
     [SerializeField] private int targetCoins = 3; // クリアに必要な総コイン枚数
 
+    [Header("シーンの設定")]
+    [SerializeField] private string titleSceneName = "Title"; // タイトル画面のシーン名
+
     private int coinCount = 0; // 現在のコイン枚数
     private bool isCleared = false; // クリア済みかどうかの変数
 
@@ -38,11 +41,19 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// DeadZone、TrapObjectから呼ばれ、シーンをリセットする。
+    /// DeadZone、TrapObject、およびRETRYボタンから呼ばれ、シーンをリセットする。
     /// </summary>
     public void RestartStage()
     {
         // 今のシーンを読み直す
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    /// <summary>
+    /// TITLEボタンから呼ばれ、タイトルに戻る。
+    /// </summary>
+    public void ReturnToTitle()
+    {
+        SceneManager.LoadScene(titleSceneName);
     }
 }
