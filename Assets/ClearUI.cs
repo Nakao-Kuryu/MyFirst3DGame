@@ -1,19 +1,19 @@
 using UnityEngine;
 
 /// <summary>
-/// クリア表示を担当するUIコンポーネント
-/// GameManager のイベントを購読し、クリアしたときだけ表示を更新する。
+/// クリア画面を担当するUIコンポーネント
+/// GameManager のイベントを購読し、クリアしたときにクリア画面を表示する。
 /// </summary>
 public class ClearUI : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
-    [SerializeField] private GameObject clearTextUI;
+    [SerializeField] private GameObject clearPanel;
 
     void OnEnable()
     {
         if (gameManager != null)
         {
-            gameManager.OnGameCleared += ShowClearText;
+            gameManager.OnGameCleared += ShowClearPanel;
         }
     }
 
@@ -21,12 +21,15 @@ public class ClearUI : MonoBehaviour
     {
         if (gameManager != null)
         {
-            gameManager.OnGameCleared -= ShowClearText;
+            gameManager.OnGameCleared -= ShowClearPanel;
         }
     }
 
-    private void ShowClearText()
+    private void ShowClearPanel()
     {
-        clearTextUI.SetActive(true);
+        if (clearPanel != null)
+        {
+            clearPanel.SetActive(true);
+        }
     }
 }

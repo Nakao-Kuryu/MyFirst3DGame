@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     [Header("接地判定の設定")]
     [SerializeField] private float groundNormalThreshold = 0.7f; // 面の法線のyがこれより大きければ床とみなす
 
+    [Header("参照")]
+    [SerializeField] private GameManager gameManager;
+
     // 内部キャッシュ用の変数
     private Rigidbody rb;
     private bool isGrounded = true;
@@ -22,6 +25,26 @@ public class PlayerController : MonoBehaviour
     private float moveV;
     private bool isJumpRequested = false;
 
+    // 操作を受け付けるかどうか（クリア後は false）
+    private bool canControl = true;
+
+    void OnEnable()
+    {
+        // クリアの通知を購読
+        if (gameManager != null)
+        {
+            gameManager.OnGameCleared += OnGameCleared;
+        }
+    }
+
+    void OnDisable()
+    {
+        // 購読を解除
+        if (gameManager != null)
+        {
+            gameManager.OnGameCleared -= OnGameCleared;
+        }
+    }
 
     void Start()
     {
@@ -38,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (rb == null) return;
+        if (rb == null || !canControl) return; // 操作できないときは入力を読まない
 
         // フレーム単位の取りこぼしを防ぐため、Update内で取得
         moveH = Input.GetAxis("Horizontal");
@@ -85,5 +108,19 @@ public class PlayerController : MonoBehaviour
                 return;
             }
         }
+    }
+
+    /// <summary>
+    /// GameManager からクリアの通知を受けたときに呼ばれ、プレイヤーの操作を止める。
+    /// </summary>
+    private void OnGameCleared()
+    {
+        canControl = false;
+        moveH = 0;
+        moveV = 0;
+        isJumpRequested = false;
+
+        // 移動の勢いを止める
+        rb.linearVelocity = Vector3.zero;
     }
 }
